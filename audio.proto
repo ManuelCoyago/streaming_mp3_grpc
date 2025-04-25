@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package audio;
+
+service AudioService {
+  rpc ListFiles (Empty) returns (FileList);
+  rpc StreamAudio (AudioRequest) returns (stream AudioChunk);
+  rpc GetMetadata (AudioRequest) returns (Metadata);
+}
+
+message Empty {}
+
+message FileList {
+  repeated string files = 1;
+}
+
+message AudioRequest {
+  string filename = 1;
+}
+
+message AudioChunk {
+  bytes data = 1;
+}
+
+message Metadata {
+  string filename = 1;
+  float duration = 2;
+  int32 sample_rate = 3;
+  int32 channels = 4;
+}
